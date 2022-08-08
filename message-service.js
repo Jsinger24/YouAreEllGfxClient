@@ -1,13 +1,15 @@
 export default class MessageService{
 getAllMessages() {
-        let request = new XMLHttpRequest();
-        new Promise(function(resolve, reject){
+        const request = new XMLHttpRequest();
+        return new Promise(function(resolve, reject){
          request.onload = function(){
-            if (request.status >= 200 && request.status <= 300){
+            if (request.status >= 200 && request.status < 300){
             const threads = JSON.parse(request.responseText);
             resolve(threads);
             console.log(JSON.parse(request.responseText))
+            console.log("sdfsd")
             }else {
+            console.log('Error: ' + request.status);
             reject({
             status: request.status,
             statusText: request.statusText
@@ -20,6 +22,28 @@ getAllMessages() {
         request.send();
     })
 }
+
+//function populateMessages(messages){
+//    console.log("yea");
+//    messages.forEach(message => {
+//     addMessageToThread(message)
+//        })
+//    }
+//
+//    function addMessageToThread(message) {
+//                    console.log("bs");
+//                        const messageListItem = document.createElement("LI");
+//                        const userIdHeading = document.createElement("h3");
+//                        const messageParagraph = document.createElement("p");
+//                        const messageContent = document.createTextNode(message.message);
+//                        const userIdContent = document.createTextNode(message.fromid);
+//                        userIdHeading.appendChild(userIdContent);
+//                        messageParagraph.appendChild(messageContent);
+//                        messageListItem
+//                            .appendChild(userIdHeading)
+//                            .appendChild(messageParagraph);
+//                        document.getElementById("message-list").appendChild(messageListItem);
+//                    }
 
     createNewMessage(message){
     const request = new XMLHttpRequest();
@@ -38,11 +62,11 @@ getAllMessages() {
                 }
             };
 
-            request.open("POST", `http://zipcode.rocks:8085/ids/${message.fromid}/messages`);
+            request.open("POST", "http://zipcode.rocks:8085/ids/${message.fromid}/messages");
 
             request.send(JSON.stringify(message));
         });
-    }
 
     };
 }
+
