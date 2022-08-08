@@ -68,4 +68,5 @@ messageService.getAllMessages().then(successCallback, errorCallback);
                         .appendChild(messageParagraph);
                     document.getElementById("message-list").appendChild(messageListItem);
                 }
+                createFormListener();
 
